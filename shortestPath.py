@@ -1,25 +1,4 @@
 import heapq
-from collections import defaultdict
-
-def prim_mst(graph):
-    mst = defaultdict(dict)
-    visited = set()
-    start_node = list(graph.keys())[0]
-    priority_queue = [(0, None, start_node)]
-
-    while priority_queue:
-        weight, parent, current_node = heapq.heappop(priority_queue)
-        if current_node not in visited:
-            visited.add(current_node)
-            if parent is not None:
-                mst[parent][current_node] = weight
-                mst[current_node][parent] = weight
-
-            for neighbor, neighbor_weight in graph[current_node].items():
-                if neighbor not in visited:
-                    heapq.heappush(priority_queue, (neighbor_weight, current_node, neighbor))
-
-    return mst
 
 def dijkstra(graph, start, end):
     distances = {node: float('inf') for node in graph}
@@ -54,11 +33,4 @@ graph = {
     'Kota E': {'Kota B': 17, 'Kota C': 13, 'Kota D': 11, 'Kota F': 10},
     'Kota F': {'Kota A': 11, 'Kota B': 20, 'Kota D': 16, 'Kota E': 10},
 }
-
-# Langkah 1: Membuat Minimum Spanning Tree
-mst_graph = prim_mst(graph)
-print("Minimum Spanning Tree:")
-print(mst_graph)
-
-# Langkah 2: Menggunakan Dijkstra untuk mencari jalur terpendek
-shortest_path(mst_graph, 'Kota A', 'Kota C')
+shortest_path(graph, 'Kota A', 'Kota C')
